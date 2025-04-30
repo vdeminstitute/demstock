@@ -1,0 +1,15 @@
+Package: demstock
+Type: Package
+Title: demstock
+Version: 1.0
+Date: 2025-04-30
+Authors@R: c(
+    person("Amanda", "Edgell", email = "abedgell@ua.edu", role = c("aut")),
+    person("Matthew", "Wilson", email = "wilso929@mailbox.sc.edu", role = c("aut")),
+    person("Vanessa", "Boese-Schlosser", email = "vanessa.boese@wzb.eu", role = c("aut")))
+Description: Add description.
+Depends: R (>= 4.0.3)
+License: GPL-3
+Imports: vdemdata
+Encoding: UTF-8
+RoxygenNote: 7.2.3

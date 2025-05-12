@@ -1,0 +1,65 @@
+##### Demonstration of stock package
+##### Matthew Wilson
+##### May 2025
+
+library(tidyverse)
+
+##### Multiple values and indices
+
+get_stock(var=c("v2x_polyarchy","v2x_libdem"),val=c(.99,.95))
+
+vMex <- v.dem.out %>% filter(country_name=="Mexico")
+
+vMex2<-as.data.frame(rbind(
+	cbind("year"=vMex$year,"val"=vMex$v2x_polyarchy,"which1"="EDI","depreciation"="n/a"), 
+	cbind("year"=vMex$year,"val"=vMex$v2x_polyarchy.99,"which1"="EDI","depreciation"="1%"), 
+	cbind("year"=vMex$year,"val"=vMex$v2x_polyarchy.95,"which1"="EDI","depreciation"="5%"), 
+	cbind("year"=vMex$year,"val"=vMex$v2x_libdem,"which1"="LDI","depreciation"="n/a"), 
+	cbind("year"=vMex$year,"val"=vMex$v2x_libdem.99,"which1"="LDI","depreciation"="1%"), 
+	cbind("year"=vMex$year,"val"=vMex$v2x_libdem.95,"which1"="LDI","depreciation"="5%")))
+vMex2$year<-as.numeric(vMex2$year)
+vMex2$val<-as.numeric(vMex2$val)
+vMex2$depreciation<-factor(vMex2$depreciation, levels=c("n/a","1%","5%"))
+
+ggplot(vMex2, aes(x=year))+
+geom_line(aes(y=val, group=depreciation,color=depreciation,lty=depreciation))+
+facet_wrap(facets="which1")+
+scale_color_manual(values=c("cadetblue","black","black"))+
+scale_linetype_manual(values=c(1,1,2))+
+ggtitle("Mexico")+xlab("Year")+ylab("Value")+
+theme_minimal()+theme(legend.position="bottom")+
+guides(color = guide_legend(title = "Depreciation rate: "), linetype= guide_legend(title = "Depreciation rate: "))+
+theme(axis.title=element_text(size=14), axis.text=element_text(size=12), legend.text=element_text(size=12),
+legend.title=element_text(size=14),strip.text=element_text(size=14),plot.title=element_text(size=18))
+ggsave("Mexico.png",width=8,height=6)
+
+##### Fill
+
+get_stock(var=c("v2x_polyarchy"),val=c(.99),fill=0,name="nofill")
+get_stock(var=c("v2x_polyarchy"),val=c(.99),fill=5,name="fill5")
+
+vGreece<-as.data.frame(rbind(
+	cbind("year"=nofill[which(nofill$country_name=="Greece"),]$year,
+	      "val"=nofill[which(nofill$country_name=="Greece"),]$v2x_polyarchy,
+	      "which"="EDI"),
+	cbind("year"=nofill[which(nofill$country_name=="Greece"),]$year,
+	      "val"=nofill[which(nofill$country_name=="Greece"),]$v2x_polyarchy.99,
+	      "which"="1% (no fill)"),
+	cbind("year"=fill5[which(fill5$country_name=="Greece"),]$year,
+	      "val"=fill5[which(fill5$country_name=="Greece"),]$v2x_polyarchy.99,
+	      "which"="1% (fill=5)")))
+vGreece$year<-as.numeric(vGreece$year)
+vGreece$val<-as.numeric(vGreece$val)
+vGreece$which<-factor(vGreece$which,levels=c("EDI","1% (no fill)","1% (fill=5)"))
+
+ggplot(vGreece, aes(x=year))+
+geom_line(aes(y=val, group=which,color=which,lty=which))+
+scale_color_manual(values=c("cadetblue","black","black"))+
+scale_linetype_manual(values=c(1,1,2))+
+ggtitle("Greece")+xlab("Year")+ylab("Value")+
+theme_minimal()+theme(legend.position="bottom")+
+guides(color = guide_legend(title = "Type: "), linetype= guide_legend(title = "Type: "))+
+theme(axis.title=element_text(size=14), axis.text=element_text(size=12), legend.text=element_text(size=12),
+legend.title=element_text(size=14),strip.text=element_text(size=14),plot.title=element_text(size=18))
+ggsave("Greece.png",width=7,height=6)
+

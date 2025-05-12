@@ -8,28 +8,28 @@ get_stock(
   var = "v2x_polyarchy",
   val = 0.99,
   fill = 5,
-  new = F,
   add = NULL,
   name = "v.dem.out"
 )
 }
 \arguments{
 \item{var}{The V-Dem variables you wish to calculate a stock measure from. 
-The default is the Electoral Democracy Index (v2x_polyarchy).}
+The default is the Electoral Democracy Index (v2x_polyarchy). 
+A stock variable is calculated for each element of var.
+(Note: each variable in var is first normalized to be between 0 and 1.)\cr}
 
 \item{val}{The weights to apply to the cumulative sum of past values. The 
 default weight is 0.99. A stock variable is calculated for each element of 
 var and val. \cr
-(Note: the weight must be between 0 and 1.)}
+(Note: the weight must be between 0 and 1 or will receive an error message.)}
 
 \item{fill}{The number of years to fill forward missing values. 
-The default is five years. \cr (Note: the fill value must be a single whole number
-greater than one.)\cr}
+The default is five years. To prevent values being filled forward, use 'fill=0'\cr 
+(Note: the fill value must be a single whole number greater than or equal to 
+zero or will return an error message.)\cr}
 
-\item{new}{Whether to restart stock after break in values. 
-The default is FALSE.\cr}
-
-\item{add}{Any additional V-Dem variables you wish added to the output dataset.}
+\item{add}{Any additional V-Dem variables you wish added to the output dataset.\cr
+Names must match variables names in the V-Dem dataset.}
 
 \item{name}{An optional name for the output. The default name is 'v.dem.out'.\cr
 (Note: re-running the command without specifying a name for the new output 
@@ -42,21 +42,20 @@ any user-specified additional variables from the V-Dem dataset.
 }
 \description{
 This package allows you to generate a cumulative weighted sum of past values 
-for any V-Dem variable with user-defined weights.  
-The resulting measure is re-scaled to represent the share of the total 
-possible stock the country could have accumulated up until that year. \cr\cr
-CAUTION: The function generates a data frame containing 
-a number of stock variables equal to length(var)*length(val). Specifying multiple
-elements in var and val will result in higher computational time. Our package 
-works, but isn't the most efficient. So, if your machine is slower or you 
-specify many elements in var and val, feel 
-free to grab a book and a beer while you wait for the data to process.
+for any V-Dem variable with user-defined weights. The resulting measure is 
+re-scaled to represent the share of the total possible stock the country 
+could have accumulated up until that year. 
+The package uses the latest version of the data loaded by the 
+vdemdata R package.
+The function generates a data frame containing a number of stock variables 
+equal to length(var)*length(val). Specifying multiple elements in var and val 
+will result in higher computational time. If your machine is slower or you 
+specify many elements in var and val, be prepared to wait for the data to process.
 }
 \examples{
 get_stock()
 get_stock(var="v2x_libdem")
 get_stock(var="v2x_libdem", val=.975)
-get_stock(var="v2x_libdem", name="newdata")
 get_stock(var="v2x_libdem", fill=10)
-get_stock(var="v2x_libdem", new=T)
+get_stock(var="v2x_libdem", name="newdata")
 }

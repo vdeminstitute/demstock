@@ -59,8 +59,8 @@ devtools::install_github("vdeminstitute/getstock")
 
 When using this package, please include the following citations: 
 
-Wilson, Matthew C., Amanda B. Edgell, and Vanessa Boese-Schlosser. 2025. "The demstock R package." Varieties of Democracy Institute. https://github.com/vdeminstitute/demstock. 
+• Wilson, Matthew C., Amanda B. Edgell, and Vanessa Boese-Schlosser. 2025. "The demstock R package." Varieties of Democracy Institute. https://github.com/vdeminstitute/demstock. 
 
-Edgell, Amanda B., Matthew C. Wilson, and Vanessa Boese-Schlosser. 2025. "Introducing demstock: An R package for calculating stock variables using the Varieties of Democracy (V-Dem) data." V-Dem Working Paper No. [insert #]. [insert url]
+• Edgell, Amanda B., Matthew C. Wilson, and Vanessa Boese-Schlosser. 2025. "Introducing demstock: An R package for calculating stock variables using the Varieties of Democracy (V-Dem) data." V-Dem Working Paper No. [insert #]. [insert url]
 
-Edgell, Amanda B., Matthew C. Wilson, Vanessa A. Boese, and Sandra Grahn. 2020. "Democratic Legacies: Using Democratic Stock to Assess Norms, Growth, and Regime Trajectories." V-Dem Working Paper No.100, https://www.v-dem.net/media/publications/working_paper_100.pdf
+• Edgell, Amanda B., Matthew C. Wilson, Vanessa A. Boese, and Sandra Grahn. 2020. "Democratic Legacies: Using Democratic Stock to Assess Norms, Growth, and Regime Trajectories." V-Dem Working Paper No.100, https://www.v-dem.net/media/publications/working_paper_100.pdf

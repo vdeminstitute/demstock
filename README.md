@@ -3,7 +3,9 @@
 An R package to calculate stock measures from the most recent [V-Dem (Varieties of Democracy)](https://www.v-dem.net/vdemds.html) dataset. 
 
 This package allows you to generate a cumulative weighted sum of past values for any [V-Dem variable](https://v-dem.net/documents/55/codebook.pdf) with user-defined weights. The resulting measure is re-scaled to represent the share of the total possible stock the country could have accumulated up until that year. 
+
 • The package uses the latest version of the data loaded by the vdemdata R package.
+
 • The function generates a data frame containing a number of stock variables equal to length(var)*length(val). Specifying multiple elements in var and val will result in higher computational time. If your machine is slower or you specify many elements in var and val, be prepared to wait for the data to process.
 
 ### Functions ###

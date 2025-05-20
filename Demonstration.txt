@@ -22,15 +22,16 @@ vMex2$val<-as.numeric(vMex2$val)
 vMex2$depreciation<-factor(vMex2$depreciation, levels=c("n/a","1%","5%"))
 
 ggplot(vMex2, aes(x=year))+
-geom_line(aes(y=val, group=depreciation,color=depreciation,lty=depreciation))+
-facet_wrap(facets="which1")+
-scale_color_manual(values=c("cadetblue","black","black"))+
-scale_linetype_manual(values=c(1,1,2))+
-ggtitle("Mexico")+xlab("Year")+ylab("Value")+
-theme_minimal()+theme(legend.position="bottom")+
-guides(color = guide_legend(title = "Depreciation rate: "), linetype= guide_legend(title = "Depreciation rate: "))+
-theme(axis.title=element_text(size=14), axis.text=element_text(size=12), legend.text=element_text(size=12),
-legend.title=element_text(size=14),strip.text=element_text(size=14),plot.title=element_text(size=18))
+	geom_line(aes(y=val, group=depreciation,color=depreciation,lty=depreciation))+
+	facet_wrap(facets="which1")+
+	scale_color_manual(values=c("cadetblue","black","black"))+
+	scale_linetype_manual(values=c(1,1,2))+
+	ggtitle("Mexico")+xlab("Year")+ylab("Value")+
+	theme_minimal()+theme(legend.position="bottom")+
+	guides(color = guide_legend(title = "Depreciation rate: "), linetype= guide_legend(title = "Depreciation rate: "))+
+	theme(axis.title=element_text(size=14), axis.text=element_text(size=12), legend.text=element_text(size=12),
+	legend.title=element_text(size=14),strip.text=element_text(size=14),plot.title=element_text(size=18))
+
 ggsave("Mexico.png",width=8,height=6)
 
 ##### Fill
@@ -53,13 +54,14 @@ vGreece$val<-as.numeric(vGreece$val)
 vGreece$which<-factor(vGreece$which,levels=c("EDI","1% (no fill)","1% (fill=5)"))
 
 ggplot(vGreece, aes(x=year))+
-geom_line(aes(y=val, group=which,color=which,lty=which))+
-scale_color_manual(values=c("cadetblue","black","black"))+
-scale_linetype_manual(values=c(1,1,2))+
-ggtitle("Greece")+xlab("Year")+ylab("Value")+
-theme_minimal()+theme(legend.position="bottom")+
-guides(color = guide_legend(title = "Type: "), linetype= guide_legend(title = "Type: "))+
-theme(axis.title=element_text(size=14), axis.text=element_text(size=12), legend.text=element_text(size=12),
-legend.title=element_text(size=14),strip.text=element_text(size=14),plot.title=element_text(size=18))
+	geom_line(aes(y=val, group=which,color=which,lty=which))+
+	scale_color_manual(values=c("cadetblue","black","black"))+
+	scale_linetype_manual(values=c(1,1,2))+
+	ggtitle("Greece")+xlab("Year")+ylab("Value")+
+	theme_minimal()+theme(legend.position="bottom")+
+	guides(color = guide_legend(title = "Type: "), linetype= guide_legend(title = "Type: "))+
+	theme(axis.title=element_text(size=14), axis.text=element_text(size=12), legend.text=element_text(size=12),
+	legend.title=element_text(size=14),strip.text=element_text(size=14),plot.title=element_text(size=18))
+
 ggsave("Greece.png",width=7,height=6)
 

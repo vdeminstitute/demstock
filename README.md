@@ -59,7 +59,7 @@ When using this package, please include the following citations:
 
 • Wilson, Matthew C., Amanda B. Edgell, and Vanessa Boese-Schlosser. 2025. "The demstock R package." Varieties of Democracy Institute. https://github.com/vdeminstitute/demstock. 
 
-• Edgell, Amanda B., Matthew C. Wilson, and Vanessa Boese-Schlosser. 2025. "Introducing demstock: An R package for calculating stock variables using the Varieties of Democracy (V-Dem) data." V-Dem Working Paper No. [insert #]. [insert url]
+• Edgell, Amanda B., Matthew C. Wilson, and Vanessa Boese-Schlosser. 2025. "Introducing demstock: An R package for calculating stock variables using the Varieties of Democracy (V-Dem) data." V-Dem Working Paper No 153. (https://v-dem.net/media/publications/WP_153.pdf)
 
 • Coppedge, Michael, John Gerring, Carl Henrik Knutsen, Staffan I. Lindberg, Jan Teorell, David Altman, Fabio Angiolillo, Michael Bernhard, Agnes Cornell, M. Steven Fish, Linnea Fox, Lisa Gastaldi, Haakon Gjerløw, Adam Glynn, Ana Good God, Sandra Grahn, Allen Hicken, Katrin Kinzelbach, Joshua Krusell, Kyle L. Marquardt, Kelly McMann, Valeriya Mechkova, Juraj Medzihorsky, Natalia Natsika, Anja Neundorf, Pamela Paxton, Daniel Pemstein, Johannes von Römer, Brigitte Seim, Rachel Sigman, Svend-Erik Skaaning, Jeffrey Staton, Aksel Sundström, Marcus Tannenberg, Eitan Tzelgov, Yi-ting Wang, Felix Wiebrecht, Tore Wig, Steven Wilson and Daniel Ziblatt. 2025. "V-Dem Country-Year Dataset v15" Varieties of Democracy (V-Dem) Project. https://doi.org/10.23696/vdemds25.
 

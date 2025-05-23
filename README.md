@@ -13,7 +13,7 @@ This package allows you to generate a cumulative weighted sum of past values for
 
 ### Example: ###
 ``` 
-getstock(var = "v2x_polyarchy", val = 0.99, fill=5, add=NULL, name = "v.dem.out") 
+get_stock(var = "v2x_polyarchy", val = 0.99, fill=5, add=NULL, name = "v.dem.out") 
 ```
 
 ### Variables ###
@@ -39,11 +39,11 @@ getstock(var = "v2x_polyarchy", val = 0.99, fill=5, add=NULL, name = "v.dem.out"
 
 ### Installation ###
 ```
-# Install the development version of the getstock package 
+# Install the development version of the demstock package 
 
 # First, you need to have the devtools package installed
 install.packages("devtools")
-# now, install the getstock package directly from GitHub
+# now, install the demstock package directly from GitHub
 devtools::install_github("vdeminstitute/demstock")
 
 # NOTE: make sure you have an updated R version and

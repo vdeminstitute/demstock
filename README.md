@@ -44,7 +44,7 @@ getstock(var = "v2x_polyarchy", val = 0.99, fill=5, add=NULL, name = "v.dem.out"
 # First, you need to have the devtools package installed
 install.packages("devtools")
 # now, install the getstock package directly from GitHub
-devtools::install_github("vdeminstitute/getstock")
+devtools::install_github("vdeminstitute/demstock")
 
 # NOTE: make sure you have an updated R version and
 # - since the package is a development version - 

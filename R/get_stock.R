@@ -274,36 +274,12 @@ hist.states<-function(){
       print("Historical country ID created.")
 			}
 
-#5. Normalize and fill forward years
-fill.data<-function(x,f=5){
-			if(exists("v.dem.sub")==F){print("Error: v.dem.sub does not exist.")}
-			if(f<0){print("Error: 'fill' must be a single positive integer.")}
-      for(e in x){
-  			if(length(which(colnames(v.dem.sub)==e))==0){print("Error: necessary variable does not exist.")}
-  			if(typeof(v.dem.sub[,which(colnames(v.dem.sub)==e)])=="character"){print("Error: variable is not numeric.")}
-            	# Normalize variable
-              maxval<<-max(v.dem.sub[,which(colnames(v.dem.sub)==e)], na.rm=T)
-              minval<<-min(v.dem.sub[,which(colnames(v.dem.sub)==e)], na.rm=T)
-        	    v.dem.sub[,ncol(v.dem.sub)+1]<-(v.dem.sub[,which(colnames(v.dem.sub)==e)]-minval)/(maxval-minval)
-        	    colnames(v.dem.sub)[ncol(v.dem.sub)]<-paste0(e,"n")
-        	v.dem.sub<- v.dem.sub %>% group_by(country_id) %>% mutate(!!as.name(paste0(e,"_filled")):=!!as.name(paste0(e,"n")))}
-      if(f>0){
-        for(e in x){
-        	for(lagval in c(1:f)){
-          	v.dem.sub<- v.dem.sub %>% group_by(country_id) %>% mutate(!!as.name(paste0("L",lagval,e)):=lag(!!as.name(paste0(e,"n")), n=lagval))
-            v.dem.sub[which(is.na(v.dem.sub[,which(colnames(v.dem.sub)==paste0(e,"_filled"))])==T),which(colnames(v.dem.sub)==paste0(e,"_filled"))]<-v.dem.sub[which(is.na(v.dem.sub[,which(colnames(v.dem.sub)==paste0(e,"_filled"))])==T),which(colnames(v.dem.sub)==paste0("L",lagval,e))]
-            v.dem.sub<-v.dem.sub[,-which(colnames(v.dem.sub)==paste0("L",lagval,e))]
-        	}}}
-			v.dem.sub<<-v.dem.sub
-			print(paste0("Variables filled forward ", f, " years."))
-      }
-	
-#6. Create measure based on historical antecedence
+#5. Create measure based on historical antecedence
 ante.data<-function(x){
 			if(exists("v.dem.sub")==F){print("Error: v.dem.sub does not exist.")}
 			for(e in x){
-			if(length(which(colnames(v.dem.sub)==paste0(e,"_filled")))==0){print("Error: necessary variable does not exist.")}
-	    v.dem.sub[,ncol(v.dem.sub)+1]<-v.dem.sub[, which(colnames(v.dem.sub)==paste0(e,"_filled"))]; colnames(v.dem.sub)[ncol(v.dem.sub)]<-paste0(e,".hist")
+			if(length(which(colnames(v.dem.sub)==paste0(e,"")))==0){print("Error: necessary variable does not exist.")}
+	    v.dem.sub[,ncol(v.dem.sub)+1]<-v.dem.sub[, which(colnames(v.dem.sub)==paste0(e,""))]; colnames(v.dem.sub)[ncol(v.dem.sub)]<-paste0(e,".hist")
     
   	  changed<-c(11, 13, 15, 17, 19, 26, 29, 33, 34, 35, 37, 39, 42, 76, 77, 91, 97, 99, 101, 110, 112, 125, 144, 157, 158, 190, 197, 198, 210, 373)
 	    temp<-subset(v.dem.sub, country_id.hist %in% changed)
@@ -319,14 +295,38 @@ ante.data<-function(x){
       #Carrying forward Egypt, which shows similar values before and after a gap from 1883-1912. This was all British colonial rule period
       for(y in c(1883:1912)){v.dem.sub[which(v.dem.sub$country_id==13 & v.dem.sub$year==y),which(colnames(v.dem.sub)==paste0(e,".hist"))]<-v.dem.sub[which(v.dem.sub$country_id==13 & v.dem.sub$year==(y-1)),which(colnames(v.dem.sub)==paste0(e,".hist"))]}
       #Averaged values for Burkina Faso under French West Africa
-      FWA<-subset(v.dem.sub, year>=1932 & year<=1946 & (country_id %in% c(64,28,60)), select=c(country_name, country_id, year, eval(as.name(paste0(e,"_filled")))))
-      v.dem.sub[which(v.dem.sub$country_id==54 & v.dem.sub$year>=1932 & v.dem.sub$year<=1946),which(colnames(v.dem.sub)==paste0(e,".hist"))]<-aggregate(FWA[,which(colnames(FWA)==paste0(e,"_filled"))],by=list(FWA$year), FUN="mean", na.rm=T)[,2]
+      FWA<-subset(v.dem.sub, year>=1932 & year<=1946 & (country_id %in% c(64,28,60)), select=c(country_name, country_id, year, eval(as.name(paste0(e,"")))))
+      v.dem.sub[which(v.dem.sub$country_id==54 & v.dem.sub$year>=1932 & v.dem.sub$year<=1946),which(colnames(v.dem.sub)==paste0(e,".hist"))]<-aggregate(FWA[,which(colnames(FWA)==paste0(e,""))],by=list(FWA$year), FUN="mean", na.rm=T)[,2]
       rm(FWA)
 			}
 	
 			v.dem.sub<<-v.dem.sub
 			print("Antecedent values imputed.")
 			}
+
+#6. Normalize and fill forward years
+fill.data<-function(x,f=5){
+			if(exists("v.dem.sub")==F){print("Error: v.dem.sub does not exist.")}
+			if(f<0){print("Error: 'fill' must be a single positive integer.")}
+      for(e in x){
+  			if(length(which(colnames(v.dem.sub)==paste0(e,".hist")))==0){print("Error: necessary variable does not exist.")}
+  			if(typeof(v.dem.sub[,which(colnames(v.dem.sub)==paste0(e,".hist"))])=="character"){print("Error: variable is not numeric.")}
+            	# Normalize variable
+              maxval<<-max(v.dem.sub[,which(colnames(v.dem.sub)==paste0(e,".hist"))], na.rm=T)
+              minval<<-min(v.dem.sub[,which(colnames(v.dem.sub)==paste0(e,".hist"))], na.rm=T)
+        	    v.dem.sub[,ncol(v.dem.sub)+1]<-(v.dem.sub[,which(colnames(v.dem.sub)==paste0(e,".hist"))]-minval)/(maxval-minval)
+        	    colnames(v.dem.sub)[ncol(v.dem.sub)]<-paste0(e,"n")
+        	v.dem.sub<- v.dem.sub %>% group_by(country_id) %>% mutate(!!as.name(paste0(e,"_filled")):=!!as.name(paste0(e,"n")))}
+      if(f>0){
+        for(e in x){
+        	for(lagval in c(1:f)){
+          	v.dem.sub<- v.dem.sub %>% group_by(country_id) %>% mutate(!!as.name(paste0("L",lagval,e)):=lag(!!as.name(paste0(e,"n")), n=lagval))
+            v.dem.sub[which(is.na(v.dem.sub[,which(colnames(v.dem.sub)==paste0(e,"_filled"))])==T),which(colnames(v.dem.sub)==paste0(e,"_filled"))]<-v.dem.sub[which(is.na(v.dem.sub[,which(colnames(v.dem.sub)==paste0(e,"_filled"))])==T),which(colnames(v.dem.sub)==paste0("L",lagval,e))]
+            v.dem.sub<-v.dem.sub[,-which(colnames(v.dem.sub)==paste0("L",lagval,e))]
+        	}}}
+			v.dem.sub<<-v.dem.sub
+			print(paste0("Variables filled forward ", f, " years."))
+      }
 
 #7. Calculate stock
 calc.stock<-function(x,v=.99){
@@ -341,7 +341,7 @@ calc.stock<-function(x,v=.99){
       if(length(table(v.dem.out[,which(colnames(v.dem.out)==e)]))<10){print("Small number of possible values: stock may not be appropriate for this measure.")}
 			if(is.numeric(v)==F){print("Error: weight is not numeric.")}
         v.dem.out$startyear<-NA
-      	v.dem.out[which(is.na(v.dem.out[,which(colnames(v.dem.out)==paste0(e,".hist"))])==F),]$startyear<-v.dem.out[which(is.na(v.dem.out[,which(colnames(v.dem.out)==paste0(e,".hist"))])==F),]$year
+      	v.dem.out[which(is.na(v.dem.out[,which(colnames(v.dem.out)==paste0(e,"_filled"))])==F),]$startyear<-v.dem.out[which(is.na(v.dem.out[,which(colnames(v.dem.out)==paste0(e,"_filled"))])==F),]$year
           v.dem.out <- v.dem.out %>%
             group_by(country_id) %>%
             mutate(!!as.name(paste0(e,".start")) := min(startyear, na.rm=T)) %>%
@@ -353,9 +353,9 @@ calc.stock<-function(x,v=.99){
         vlab<<-sub("^(-?)0.", "\\1.", sprintf(paste("%.",places,"f",sep=""), w))
   
         if(length(grep("Lval",  names(v.dem.out)))>0){v.dem.out<-v.dem.out[,-grep("Lval",  names(v.dem.out))]}
-        if(length(grep("Lhist", names(v.dem.out)))>0){v.dem.out<-v.dem.out[,-grep("Lhist", names(v.dem.out))]}
+        if(length(grep("Lfilled", names(v.dem.out)))>0){v.dem.out<-v.dem.out[,-grep("Lfilled", names(v.dem.out))]}
         
-      	    #sets values to minimum value for first observed year
+      	    #sets values to zero for first observed year
             v.dem.out[,ncol(v.dem.out)+1]<-NA; colnames(v.dem.out)[ncol(v.dem.out)]<-paste0(e,vlab)
             v.dem.out[which(v.dem.out$year==v.dem.out[,which(colnames(v.dem.out)==paste0(e,".start"))]),which(colnames(v.dem.out)==paste0(e,vlab))]<-0 #minval
             v.dem.out<-as.data.frame(v.dem.out)
@@ -367,14 +367,14 @@ pb<-txtProgressBar(min=0, max=max(as.numeric(v.dem.out$year)-as.numeric(unlist(v
           setTxtProgressBar(pb, value=y)
 
             v.dem.out<-v.dem.out %>% group_by(country_id) %>% dplyr::mutate(Lval=dplyr::lag(!!as.name(paste0(e,vlab))))
-            v.dem.out<-v.dem.out %>% group_by(country_id) %>% dplyr::mutate(Lhist=dplyr::lag(!!as.name(paste0(e,".hist"))))
+            v.dem.out<-v.dem.out %>% group_by(country_id) %>% dplyr::mutate(Lfilled=dplyr::lag(!!as.name(paste0(e,"_filled"))))
             #sets all other years to previous year's stock times depreciation, plus previous year's democracy level
             v.dem.out[which(is.na(v.dem.out[,which(colnames(v.dem.out)==paste0(e,vlab))])==T & 
                               (as.numeric(v.dem.out$year)-as.numeric(unlist(v.dem.out[,which(colnames(v.dem.out)==paste0(e,".start"))])))==y),
                       which(colnames(v.dem.out)==paste0(e,vlab))]<-(w*v.dem.out[which(is.na(v.dem.out[,which(colnames(v.dem.out)==paste0(e,vlab))])==T & 
                                                                                         (as.numeric(v.dem.out$year)-as.numeric(unlist(v.dem.out[,which(colnames(v.dem.out)==paste0(e,".start"))])))==y),]$Lval)+
                                                                   v.dem.out[which(is.na(v.dem.out[,which(colnames(v.dem.out)==paste0(e,vlab))])==T & 
-                                                                                        (as.numeric(v.dem.out$year)-as.numeric(unlist(v.dem.out[,which(colnames(v.dem.out)==paste0(e,".start"))])))==y),]$Lhist
+                                                                                        (as.numeric(v.dem.out$year)-as.numeric(unlist(v.dem.out[,which(colnames(v.dem.out)==paste0(e,".start"))])))==y),]$Lfilled
                   }
             close(pb)
 
@@ -384,6 +384,7 @@ pb<-txtProgressBar(min=0, max=max(as.numeric(v.dem.out$year)-as.numeric(unlist(v
       #drop stock values for antecedent years
       v.dem.out$orig.year<-NA; v.dem.out[which(is.na(v.dem.out[,which(colnames(v.dem.out)==e)])==F),]$orig.year<-v.dem.out[which(is.na(v.dem.out[,which(colnames(v.dem.out)==e)])==F),]$year
       v.dem.out<-v.dem.out%>%group_by(country_id)%>%mutate("keepyear"=min(orig.year, na.rm=T))%>%dplyr::select(-orig.year)
+      v.dem.out<-as.data.frame(v.dem.out)
 			v.dem.out[which(v.dem.out$year<v.dem.out$keepyear),which(colnames(v.dem.out)==paste0(e,vlab))]<-NA
   print(paste("Stock of ", e, " calculated based on weight ", w, " (", 100-(w*100), "% depreciation rate).", sep=""))
   print("Note: Stock will be missing after breaks between values.");cat("\n")
@@ -401,7 +402,7 @@ pb<-txtProgressBar(min=0, max=max(as.numeric(v.dem.out$year)-as.numeric(unlist(v
   
 #8. Remove unnecessary variables (and V-dem dataset); make year and country ID numeric
 drop.vars<-function(x){
-	for(e in x){v.dem.out<-v.dem.out[,-c(which(colnames(v.dem.out) %in% c(paste0(e,"_filled"), paste0(e,".hist"), paste0(e,"n"), paste0(e,".start"), "Lval", "Lhist", "startnew")))]}
+	for(e in x){v.dem.out<-v.dem.out[,-c(which(colnames(v.dem.out) %in% c(paste0(e,".hist"), paste0(e,"_filled"), paste0(e,"n"), paste0(e,".start"), "Lval", "Lfilled", "startnew")))]}
   rm(v.dem, envir = .GlobalEnv)
   cat("V-Dem dataset removed.\n")
   if(length(grep("original", names(v.dem.out))>0)){v.dem.out<-v.dem.out[,-grep("original", names(v.dem.out))]}
@@ -441,8 +442,8 @@ get.data()
 sub.data(x,a)
 expand.data()
 hist.states()
-fill.data(x,f)
 ante.data(x)
+fill.data(x,f)
 
 ### Calculate stock
 calc.stock(x,v)

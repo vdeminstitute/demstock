@@ -286,6 +286,7 @@ ante.data<-function(x){
   	  temp<-temp %>% group_by(country_id.hist, year) %>% 
   	    mutate("tempmean" := mean(!!as.name(paste0(e,".hist")), na.rm=T))
 			temp<-subset(temp, select=c("country_id.hist", "country_name", "year", "tempmean"))
+			temp[which(temp$tempmean=='NaN'),]$tempmean<-NA
   	  v.dem.sub <- v.dem.sub %>% left_join(temp, by = c("country_id.hist", "country_name", "year"))
   	  v.dem.sub[which(v.dem.sub$country_id.hist!=v.dem.sub$country_id),which(colnames(v.dem.sub) %in% paste0(e,".hist"))]<-v.dem.sub[which(v.dem.sub$country_id.hist!=v.dem.sub$country_id),]$tempmean
 			v.dem.sub<-v.dem.sub[,-which(colnames(v.dem.sub)%in%"tempmean")]

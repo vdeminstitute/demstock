@@ -10,7 +10,7 @@ Authors@R: c(
     person("Linnea", "Fox", email = "linnea.fox@v-dem.net", role = c("cre", "aut"), comment = "Author and Active Maintainer"))
 Description: This package enables researchers to calculate stock measures (a country's accumulated experience with a particular institution or practice) for any variable in the V-Dem dataset.
 Depends: R (>= 4.0.0)
-Imports: vdemdata (>= 16.0), dplyr, tidyr, utils, rlang
+Imports: vdemdata (>= 16.0), dplyr, tidyr
 Remotes: vdeminstitute/vdemdata
 License: GPL-3
 Suggests: testthat

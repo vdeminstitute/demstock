@@ -139,7 +139,7 @@ create_stock_id <- function(df, stock_tt) {
 #' @param df A dataframe to be merged with the stock translation table.
 #' @param var A character vector of variable names for which the stock measure will be created.
 #' @param stock_tt The stock translation table, which contains the country-year combinations which will be changed to create stock_id.
-#' @import dplyr rlang
+#' @import dplyr
 #' @export
 create_antecedence <- function(df, var, stock_tt){
     
@@ -209,7 +209,7 @@ create_antecedence <- function(df, var, stock_tt){
 #' @param df A dataframe containing the stock variable(s) to be normalized and filled forward.
 #' @param var A character vector of variable names for which the stock measure will be created.
 #' @param fill The number of years to fill forward missing values. 
-#' @import dplyr rlang
+#' @import dplyr
 #' @export
 fill_data <- function(df, var, fill) {
     print(paste0("Filling forward ", fill, " years."))
@@ -294,7 +294,7 @@ fill_data <- function(df, var, fill) {
 #' @param df A dataframe containing the stock variable(s) to be calculated.
 #' @param var A character vector of variable names for which the stock measure will be created.
 #' @param val The weights to apply to the cumulative sum of past values.
-#' @import dplyr tidyr utils rlang
+#' @import dplyr tidyr
 #' @export
 calc_stock <- function(df, var, val) {
     stopifnot(is.numeric(val))

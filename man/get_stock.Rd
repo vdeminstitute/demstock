@@ -4,19 +4,13 @@
 \alias{get_stock}
 \title{Calculate stock measures from V-Dem data.}
 \usage{
-get_stock(
-  var = "v2x_polyarchy",
-  val = 0.99,
-  fill = 5,
-  add = NULL,
-  name = "v.dem.out"
-)
+get_stock(var = "v2x_polyarchy", val = 0.99, fill = 5, add = NULL, name = NULL)
 }
 \arguments{
 \item{var}{The V-Dem variables you wish to calculate a stock measure from. 
 The default is the Electoral Democracy Index (v2x_polyarchy). 
 A stock variable is calculated for each element of var.
-(Note: each variable in var is first normalized to be between 0 and 1.)\cr}
+(Note: variables in var are first normalized to be between 0 and 1, if not already between 0 and 1.)\cr}
 
 \item{val}{The weights to apply to the cumulative sum of past values. The 
 default weight is 0.99. A stock variable is calculated for each element of 
@@ -31,14 +25,16 @@ zero or will return an error message.)\cr}
 \item{add}{Any additional V-Dem variables you wish added to the output dataset.\cr
 Names must match variables names in the V-Dem dataset.}
 
-\item{name}{An optional name for the output. The default name is 'v.dem.out'.\cr
+\item{name}{An optional name for the output. \cr
 (Note: re-running the command without specifying a name for the new output 
 will result in previous output being rewritten.)}
 }
 \value{
-A dataframe containing the original V-Dem variable(s), their stock 
+A dataframe containing the original V-Dem variable(s) listed in 'var', their stock 
 measure(s) at each specified weight, along with country-year identifiers and 
 any user-specified additional variables from the V-Dem dataset.
+The calculated stock variable(s) will be labeled as "var_stock_raw" and "var_stock_weighted" 
+(e.g. "v2x_polyarchy_stock_raw" and "v2x_polyarchy_stock_weighted").
 }
 \description{
 This package allows you to generate a cumulative weighted sum of past values 
@@ -57,5 +53,5 @@ get_stock()
 get_stock(var="v2x_libdem")
 get_stock(var="v2x_libdem", val=.975)
 get_stock(var="v2x_libdem", fill=10)
-get_stock(var="v2x_libdem", name="newdata")
+get_stock(var=c("v2x_libdem", "v2csgender"), name="newdata")
 }

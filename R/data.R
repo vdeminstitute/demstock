@@ -1,0 +1,15 @@
+NULL
+
+#' Stock Translation Table
+#' 
+#' Loads in the translation table to be used for the stock calculation process.
+#' 
+#' @format Data frame with columns
+#' \describe{
+#' \item{country_id}{V-Dem country identifier}
+#' \item{country_text_id}{V-Dem country text identifier}
+#' \item{year}{Year}
+#' \item{stock_id}{Identifier for country-year translations used in the stock calculation process}
+#' }
+#' @source Edgell, Amanda B., Matthew C. Wilson, Vanessa A. Boese, and Sandra Grahn. 2020. "Democratic Legacies: Using Democratic Stock to Assess Norms, Growth, and Regime Trajectories." University of Gothenburg, Varieties of Democracy Institute: Working Paper No.100. \url{https://www.v-dem.net/media/publications/working_paper_100.pdf}
+"stock_tt"
